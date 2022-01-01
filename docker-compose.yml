@@ -6,12 +6,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
-    networks:
-      backend:
-        aliases:
-          - "licenseservice"
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_APPLICATION_NAME=licensing-service
+      - SPRING_CLOUD_CONFIG_URI=http://configservice:8071
 
 networks:
-  backend:
-    driver: bridge
+  default:
+    external: true
+    name: config-server-dockersied_config-server-network
