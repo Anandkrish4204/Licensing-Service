@@ -1,10 +1,15 @@
 package com.anand.license.service;
 
+import com.anand.license.config.ServiceConfig;
 import com.anand.license.model.License;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LicenseService {
+
+    @Autowired
+    private ServiceConfig serviceConfig;
 
     public License getLicense(String organizationId,String licenseId){
         License license = new License();
@@ -14,7 +19,7 @@ public class LicenseService {
         license.setOrganizationId(organizationId);
         license.setProductName("SalesForce");
         license.setId(1);
-        return license;
+        return license.withComment(serviceConfig.getProperty());
     }
 
 
