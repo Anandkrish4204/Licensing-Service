@@ -16,11 +16,11 @@ public class LicenseController {
     @Autowired
     LicenseService licenseService;
 
-    @GetMapping("/{licenseId}")
-    public ResponseEntity<License> getLicense(@PathVariable String organizationId,@PathVariable String licenseId){
-        License license = licenseService.getLicense(organizationId, licenseId);
+    @GetMapping("/{licenseId}/{clientType}")
+    public ResponseEntity<License> getLicense(@PathVariable String organizationId,@PathVariable String licenseId,@PathVariable String clientType){
+        License license = licenseService.getLicense(organizationId, licenseId, clientType);
         license.add(
-                linkTo(methodOn(LicenseController.class).getLicense(organizationId,licenseId)).withSelfRel(),
+                linkTo(methodOn(LicenseController.class).getLicense(organizationId,licenseId,clientType)).withSelfRel(),
                 linkTo(methodOn(LicenseController.class).createLicense(organizationId,license)).withRel("createLicense"),
                 linkTo(methodOn(LicenseController.class).updateLicense(organizationId,license)).withRel("updateLicence"),
                 linkTo(methodOn(LicenseController.class).deleteLicense(organizationId,licenseId)).withRel("deleteLicense")

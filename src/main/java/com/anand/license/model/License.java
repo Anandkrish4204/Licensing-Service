@@ -17,6 +17,7 @@ public class License extends RepresentationModel<License> {
     private String productName;
     private String licenseType;
     private String comment;
+    private Organization organization;
 
     public License withComment(String comment){
         this.comment = comment;
