@@ -1,5 +1,7 @@
 package com.anand.license.service;
 
+import com.anand.license.client.FeignClient;
+import com.anand.license.client.LoadBalancedClient;
 import com.anand.license.client.OrganizationClient;
 import com.anand.license.config.ServiceConfig;
 import com.anand.license.model.License;
@@ -16,6 +18,12 @@ public class LicenseService {
     @Autowired
     private OrganizationClient organizationClient;
 
+    @Autowired
+    private LoadBalancedClient loadBalancedClient;
+
+    @Autowired
+    private FeignClient feignClient;
+
 
     public License getLicense(String organizationId,String licenseId,String clientType){
         License license = new License();
@@ -31,8 +39,14 @@ public class LicenseService {
 
     private Organization retrieveOrganizationInfo(String organizationId,String clientType){
         switch(clientType){
-            case "dicoveryClient":
+            case "discoveryClient":
                 return organizationClient.getOrganizationByDiscoveryClient(organizationId);
+
+            case "loadBalancedClient":
+                return loadBalancedClient.getOrganizationByLoadBalancedClient(organizationId);
+
+            case "feignClient":
+                return feignClient.getOrganization(organizationId);
 
             default:
                 return null;
